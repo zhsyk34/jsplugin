@@ -18,9 +18,8 @@
 	};
 
 	function listener(target) {
-
 		var options = $(target).drag("options");
-		if (options.disabled || options.onBefore.call(target) == false) {
+		if (options.disabled) {
 			$(this).css("cursor", "");
 			return;
 		}
@@ -30,11 +29,12 @@
 		});
 
 		$(target).on("mousedown.drag", function(original) {
-			if (options.onStart.call(target, original) == false) {
+			if (options.onBefore.call(target) == false) {
 				return;
 			}
 
 			var offset = $(this).offset();
+			options.offset = offset;
 			var proxy = null;
 
 			if (options.proxy) {
@@ -55,57 +55,50 @@
 				if (proxy) {
 					proxy.remove();
 				}
-
 				options.onStop.call(target, e);
 			});
 
 			$(document).on("mousemove.drag", function(current) {
-				if (options.onDrag.call(target, current) == false) {
+				if (options.onMove.call(target, current) == false) {
 					return;
 				}
-				checkArea(current, target);
 				var dx = options.axis == "y" ? 0 : current.clientX - original.clientX;
 				var dy = options.axis == "x" ? 0 : current.clientY - original.clientY;
-				// $(target).offset({
-				// left : offset.left + dx,
-				// top : offset.top + dy
-				// });
+				var left = offset.left + dx, top = offset.top + dy;
+				// 限制范围
+				var container = options.container ? (typeof options.container == "string" ? $(options.container) : options.container) : null;
+				if (container && container.length > 0) {
+					var edge = options.edge;
+					top = Math.max(top, container.offset().top - edge);
+					top = Math.min(top, container.offset().top + container.outerHeight() - $(target).outerHeight() + edge);
+					left = Math.max(left, container.offset().left - edge);
+					left = Math.min(left, container.offset().left + container.outerWidth() - $(target).outerWidth() + edge);
+				}
+				$(target).offset({
+					left : left,
+					top : top
+				});
 			});
 		});
 	}
 
-	function checkArea(e, target) {
-		var options = $(target).drag("options");
-		var offset = $(target).offset();
-		var width = $(target).outerWidth();
-		var height = $(target).outerHeight();
-		var t = e.pageY - offset.top;
-		var r = offset.left + width - e.pageX;
-		var b = offset.top + height - e.pageY;
-		var l = e.pageX - offset.left;
-
-		console.log(t, r, b, l);
-
-		return Math.min(t, r, b, l) > options.edge;
-	}
-
 	$.fn.drag.defaults = {
-		proxy : null,
-		revert : false,
+		proxy : false,// 是否使用代理对象
+		revert : false,// 还原位置
 		cursor : "move",
-		deltaX : null,
-		deltaY : null,
-		handle : null,
-		isDragging : false,
+		// deltaX : null,
+		// deltaY : null,
+		// handle : null,
+		// delay : 100,
+		container : null,// 活动容器
+
 		disabled : false,
-		edge : 0,
-		axis : null, // x||y
-		delay : 100,
+		edge : 0,// 容器的拓展边界
+		axis : null, // 限制移动方向:x||y
+
 		onBefore : function() {
 		},
-		onStart : function(e) {
-		},
-		onDrag : function(e) {
+		onMove : function(e) {
 		},
 		onStop : function(e) {
 		}
@@ -130,6 +123,11 @@
 				$(this).drag({
 					disabled : true
 				});
+			});
+		},
+		revert : function(target) {
+			return $(target).each(function() {
+				$(this).offset($(this).drag("options").offset || {});
 			});
 		}
 	};

@@ -1,0 +1,29 @@
+body {
+	padding: 20px 100px;
+}
+
+.test {
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+	float: left;
+	text-align: center;
+	color: #fff;
+	font: 700 24px/100px Arial;
+}
+
+.parent {
+	border: 1px solid #7a4773;
+	margin-top: 10px;
+}
+
+.parent:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.button label {
+	text-indent: 1em;
+	color: #f00;
+}

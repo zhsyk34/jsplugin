@@ -1,4 +1,5 @@
-/*2015-12-22 冬至  by zhsy*/
+//2015-12-22
+
 (function($) {
 	$.fn.modal = function(options, param) {
 		if (typeof options == "string") {
