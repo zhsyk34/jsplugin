@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Resize</title>
+<link rel="stylesheet" href="../../zhsy/css/init.css">
+<script src="../../zhsy/jquery.js"></script>
+<script src="../../zhsy/js/resize.js"></script>
+
+<style>
+.parent, #test {
+	position: relative;
+	height: 100px;
+	margin-bottom: 10px;
+	border: 1px solid #335087;
+}
+
+.container {
+	width: 800px;
+	margin: 100px auto;
+}
+
+#test {
+	width: 200px;
+	height: 45px;
+}
+</style>
+
+
+</head>
+<body>
+	<div class="container">
+		<div class="parent"></div>
+		<div class="parent"></div>
+		<div class="parent"></div>
+		<div id="test">限定大小</div>
+	</div>
+	<script>
+		$(".parent").resize();
+		$("#test").resize({
+			minWidth : 50,
+			maxWidth : 900,
+			minHeight : 30,
+			maxHeight : 300
+		});
+	</script>
+</body>
+</html>

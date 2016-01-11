@@ -54,3 +54,9 @@ Array.prototype.unique2 = function() {
 	}
 	return result;
 }
+
+// random color
+function randomColor() {
+	// var edge = (0xffffff + 1).toString(16); // 0x1000000
+	return "#" + ("00000" + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
+}
