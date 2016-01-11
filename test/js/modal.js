@@ -1,7 +1,7 @@
 $(function() {
 	testModal();
-	testAlert();
-	testConfirm();
+	// testAlert();
+	// testConfirm();
 });
 function testAlert() {
 
@@ -76,7 +76,11 @@ function testModal() {
 		height : 180,
 		title : "测试弹窗二,多开,确定不能关",
 		before : function() {
-			return false;
+			// return false;
+		},
+		after : function() {
+			$(this).modal("title", "新标题");
+			$(this).modal("open");
 		}
 	});
 	$("#test2").modal("open");

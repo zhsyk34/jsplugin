@@ -1,5 +1,3 @@
-//2015-12-22
-
 (function($) {
 	$.fn.modal = function(options, param) {
 		if (typeof options == "string") {
@@ -70,7 +68,7 @@
 		close : function(target, direct) {// direct:是否直接关闭
 			var options = this.options(target);
 
-			if (!direct && options.before() === false) {// 阻止关闭
+			if (!direct && options.before.call(target) === false) {// 阻止关闭
 				return;
 			}
 
@@ -90,7 +88,7 @@
 				if (options.blur) {
 					$("body>.blur").removeClass("blur");
 				}
-				options.after();
+				options.after.call(target);
 			}
 		},
 		clear : function(target) {
@@ -99,6 +97,9 @@
 			$(target).find(":checkbox").prop("checked", false);
 			$(target).find("select option:first").prop("selected", true);
 			$(target).find("textarea").val("");
+		},
+		title : function(target, param) {
+			$(target).parents(".modal").find(".modal-title").text(param);
 		}
 	};
 
