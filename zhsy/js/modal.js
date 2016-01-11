@@ -171,6 +171,7 @@
 		});
 
 		// position
+		// console.log(modal.outerWidth());
 		if (options.left == null) {
 			modal.css({
 				left : "50%",
@@ -217,9 +218,7 @@
 			buttons : [ "sure" ],
 			width : 300,
 			height : 120,
-			before : function() {
-				return false;
-			}
+			top : 200
 		};
 
 		var target = $(".modal-alert-info").length > 0 ? $(".modal-alert-info") : $("<div class='modal-alert-info'></div>").appendTo("body");
@@ -247,9 +246,7 @@
 			buttons : [ "sure", "cancel" ],
 			width : 300,
 			height : 120,
-			before : function() {
-				return false;
-			}
+			top : 200
 		};
 		var target = $(".modal-confirm-info").length > 0 ? $(".modal-confirm-info") : $("<div class='modal-confirm-info'></div>").appendTo("body");
 
