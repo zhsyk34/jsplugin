@@ -88,7 +88,9 @@
 				if (options.blur) {
 					$("body>.blur").removeClass("blur");
 				}
-				options.after.call(target);
+				if (!direct) {
+					options.after.call(target);
+				}
 			}
 		},
 		clear : function(target) {
@@ -108,7 +110,7 @@
 		/* init html */
 		// modal
 		var modal = $(target).parents(".modal");
-		if (!modal.hasClass("modal")) {
+		if (modal.length == 0) {
 			modal = $("<div class='modal'></div>").appendTo($("body"));
 		}
 		modal.children().detach();
