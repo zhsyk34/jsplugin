@@ -107,7 +107,7 @@
 
 	function init(target) {
 		var options = $.data(target, "modal").options;
-		/* init html */
+
 		// modal
 		var modal = $(target).parents(".modal");
 		if (modal.length == 0) {
@@ -163,19 +163,15 @@
 			modal.unwrap();
 		}
 
-		/* init css */
 		// size
-		content.css({
-			width : options.width,
-			height : options.height
-		});
+		options.width && modal.width(options.width);
+		options.height && modal.height(options.height);
 
 		// position
-		// console.log(modal.outerWidth());
 		if (options.left == null) {
 			modal.css({
 				left : "50%",
-				marginLeft : -modal.width() * 0.5
+				"margin-left" : -modal.width() / 2
 			});
 		} else {
 			modal.css("left", options.left);
@@ -184,7 +180,7 @@
 		if (options.top == null) {
 			modal.css({
 				top : "50%",
-				marginTop : -modal.height() * 0.6
+				"margin-top" : -modal.height() * 7 / 10
 			});
 		} else {
 			modal.css("top", options.top);
@@ -210,6 +206,7 @@
 			$(target).modal("clear");
 		});
 	}
+
 	/* alert */
 	$.alert = function(param) {
 		var options = {
@@ -238,6 +235,7 @@
 		}
 
 	}
+
 	/* confirm */
 	$.confirm = function(param) {
 		var options = {
