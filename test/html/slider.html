@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>自制拖动条</title>
+<link rel="stylesheet" href="../../zhsy/css/init.css">
+<link rel="stylesheet" href="../../zhsy/css/slider.css">
+<script src="../../zhsy/jquery.js"></script>
+<script src="../../zhsy/js/slider.js"></script>
+
+
+<style>
+.container {
+	padding: 50px;
+}
+
+.container>div {
+	margin: 20px;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div id="s"></div>
+		<div id="s2"></div>
+	</div>
+	<script>
+		$(function() {
+			$("#s2").slider({
+				disabled : false,
+				width : 800,
+				height : 60,
+				handleWidth : 40,
+				handleHeight : 100,
+				min : 33,
+				max : 66
+			});
+			$("#s").slider({
+				value : 33,
+				min : 1,
+				max : 99,
+				disabled : false,
+				onSlideEnd : function() {
+					var v = $(this).slider("getValue");
+					console.log(v);
+				}
+			});
+			var v = $("#s").slider("value", 12);
+		});
+	</script>
+</body>
+</html>

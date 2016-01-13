@@ -27,7 +27,7 @@
 		width : "auto",
 		height : "auto",
 		left : null,
-		top : null,
+		top : 100,
 		before : function() {
 		},
 		after : function() {
@@ -163,35 +163,27 @@
 			modal.unwrap();
 		}
 
-		// size
-		options.width && modal.width(options.width);
-		options.height && modal.height(options.height);
-
-		// position
-		if (options.left == null) {
-			modal.css({
-				left : "50%",
-				"margin-left" : -modal.width() / 2
-			});
-		} else {
-			modal.css("left", options.left);
-		}
-
-		if (options.top == null) {
-			modal.css({
-				top : "50%",
-				"margin-top" : -modal.height() * 7 / 10
-			});
-		} else {
-			modal.css("top", options.top);
-		}
-
 		// visibility
 		options.closed ? modal.hide() : $(target).modal("open");
 		// zIndex
 		modal.css("z-index", options.zIndex);
 		if (options.mask) {
 			mask.css("z-index", options.zIndex - 1);
+		}
+
+		// size
+		options.width && content.width(options.width);
+		options.height && content.height(options.height);
+
+		// position
+		options.top && modal.css("top", options.top);
+		if (options.left == null) {
+			modal.css({
+				"left" : "50%",
+				"margin-left" : -content.outerWidth() / 2
+			});
+		} else {
+			modal.css("left", options.left);
 		}
 
 		/* listener */

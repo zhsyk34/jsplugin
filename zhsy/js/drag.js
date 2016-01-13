@@ -62,9 +62,7 @@
 				if (options.onMove.call(target, current) == false) {
 					return;
 				}
-				var dx = options.axis == "y" ? 0 : current.clientX - original.clientX;
-				var dy = options.axis == "x" ? 0 : current.clientY - original.clientY;
-				var left = offset.left + dx, top = offset.top + dy;
+				var left = offset.left + current.clientX - original.clientX, top = offset.top + current.clientY - original.clientY;
 				// 限制范围
 				var container = options.container ? (typeof options.container == "string" ? $(options.container) : options.container) : null;
 				if (container && container.length > 0) {
@@ -74,9 +72,10 @@
 					left = Math.max(left, container.offset().left - edge);
 					left = Math.min(left, container.offset().left + container.outerWidth() - $(target).outerWidth() + edge);
 				}
+
 				$(target).offset({
-					left : left,
-					top : top
+					left : options.axis == "y" ? null : left,
+					top : options.axis == "x" ? null : top
 				});
 			});
 		});
